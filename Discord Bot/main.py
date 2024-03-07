@@ -61,13 +61,11 @@ async def kick(ctx, member: discord.Member, *, reason=None):
 
 @bot.command()
 async def ban(ctx, member: discord.Member, *, reason=None):
-    """Ban a member from the server."""
     await member.ban(reason=reason)
     await ctx.send(f'{member.mention} has been banned.')
 
 @bot.command()
 async def unban(ctx, *, member):
-    """Unban a member from the server."""
     banned_users = await ctx.guild.bans()
     member_name, member_discriminator = member.split('#')
 
@@ -116,16 +114,13 @@ async def unmute(ctx, member: discord.Member):
         await ctx.send("You don't have the required permissions to use this command.")
         return
 
-    # Get the mute role
     mute_role = discord.utils.get(ctx.guild.roles, name='Muted')
     if not mute_role:
         await ctx.send("There is no mute role to remove.")
         return
 
-    # Unmute the member
     await member.remove_roles(mute_role, reason=f'Unmuted by {ctx.author.display_name}')
 
-    # Send a message indicating the unmute
     await ctx.send(f"{member.mention} has been unmuted.")
 
 
